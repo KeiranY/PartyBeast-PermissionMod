@@ -1,3 +1,6 @@
+# Discord auth token
+auth.json
+
 # Logs
 logs
 *.log
