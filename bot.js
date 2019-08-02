@@ -12,7 +12,7 @@ var logger = new winston.createLogger({
             format: winston.format.combine(winston.format.colorize(), format)
         }),
         new winston.transports.File({
-            filename: './bot.log',
+            filename: './log-'+Date.now()+'.log',
             format: format
         })
     ]
@@ -34,12 +34,14 @@ bot.on('ready', function() {
 bot.on('voiceStateUpdate', (oldMember, newMember) => {
   // Check if user has moved to a new voice channel.
   if(newMember.voiceChannel && oldMember.voiceChannel && (newMember.voiceChannel != oldMember.voiceChannel)){
-    logger.info(newMember.displayName + ' joined ' + newMember.voiceChannel.name)
+    user = newMember.user.username
+    channel = newMember.voiceChannel.name
+    logger.info(user + ' joined ' + channel)
     // Get Username based on PartyBeast's "Username's Channel" format
-    var owner = newMember.voiceChannel.name.split("'")[0]
+    var owner = channel.split("'")[0]
     // If user is the one the channel was created for
-    if(owner === newMember.displayName) {
-      logger.info('Adding perms for '+newMember.displayName);
+    if(owner === user) {
+      logger.info('Adding perms for '+user);
       // Give some perms
       newMember.voiceChannel.overwritePermissions(newMember.id, {'MANAGE_CHANNELS': true, 'MANAGE_ROLES': true})
     }
