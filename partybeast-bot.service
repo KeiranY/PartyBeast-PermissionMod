@@ -1,0 +1,13 @@
+[Unit]
+Description=PartyBeast-PermissionMod Bot
+After=network.target
+
+[Service]
+Type=simple
+User=ec2-user
+ExecStart=/usr/bin/node /home/ec2-user/PartyBeast-PermissionMod/bot.js
+WorkingDirectory=/home/ec2-user/PartyBeast-PermissionMod/
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
